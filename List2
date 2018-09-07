@@ -1,0 +1,198 @@
+#include<iostream>
+#include "Windows.h"
+#include<cstdlib>
+
+using namespace std;
+
+
+
+
+#define MAXLEN 100 //定义顺序表的最大长度
+
+#define LIST_INIT_SIZE 5
+
+#define LISTINCREMENT 5
+
+#define OK 1
+
+#define ERROR 0 
+
+#define INFEASIBLE -1
+
+#define OVERFLOW -2
+
+#define ElemType int
+
+#define Status int
+
+struct SqList
+
+{
+
+	ElemType *elem;
+
+	int length;
+
+	int listsize;
+
+};
+
+
+Status InitList_Sq(SqList &L)
+
+{
+
+	L.elem = new ElemType[LIST_INIT_SIZE];
+
+	if (!L.elem) exit(ERROR);
+
+	L.length = 0;
+
+	L.listsize = LIST_INIT_SIZE;
+
+	return 1;
+
+}//初始化
+
+Status ListInsert_Sq(SqList &L, int i, ElemType e)
+{
+
+	if (i<1 || i>L.length + 1)
+		return OVERFLOW;
+	if (L.length >= L.listsize)
+	{
+		//newbase = (ElemType *)realloc(L.elem, (L.listsize + LISTINCREMENT) * sizeof(ElemType));
+		ElemType * tempp = new int[(L.listsize + LISTINCREMENT)];//重新分配一个更大的
+		memcpy(tempp, L.elem, L.length*sizeof(ElemType));//将原来的内容复制过去
+		delete[] L.elem;//删掉原来的数组
+		L.elem = tempp;
+		if (!L.elem)exit(ERROR);
+		L.listsize += LISTINCREMENT;
+	}
+	int *q = &(L.elem[i - 1]);
+	for (int *p = &(L.elem[L.length - 1]); p >= q; --p)
+		*(p + 1) = *p;
+	*q = e;
+	++L.length;
+	return OK;
+}//ListInsert_Sq
+
+Status ListDelete_Sq(SqList &L, int i, ElemType &e)
+{
+	if ((i<1) || (i>L.length))return OVERFLOW;
+	ElemType *p = &(L.elem[i - 1]);
+	e = *p;
+	ElemType *q = L.elem + L.length - 1;
+	for (++p; p < q; ++p)
+		*(p - 1) = *p;
+	--L.length;
+	return OK;
+
+
+}//LIST_DELETE
+
+
+
+
+
+int main()
+
+{
+
+	int LA = (3, 5, 8, 11);
+
+	int LB = (2, 6, 8, 9, 11, 15, 20);
+
+	SqList a;
+	 
+
+	InitList_Sq(a);
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | FOREGROUND_GREEN);
+	cout << "the initialize is finished!" << endl;
+	SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+	cout << "please input two number:"<<endl<<"the first is locate the second is value!"<<endl;
+
+	while (true)
+	{
+		int locate;
+		ElemType value;
+		int choose;
+		SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | FOREGROUND_BLUE);
+		cout << "if you want to insert choose 1." << endl;
+		cout << "if you want to delete choose 2." << endl;
+		SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+		cout << "please input your choose:";
+		cin >> choose;
+		
+		int judge;
+		if (choose == 1)
+		{
+			cout << "input locate: ";
+		cin >> locate;
+		cout  << "input value:  " ;
+		cin >> value;
+			judge = ListInsert_Sq(a, locate, value);
+		}
+			
+		else if (choose == 2)
+		{
+			cout << "input locate: ";
+			cin >> locate;
+			judge = ListDelete_Sq(a, locate, value);
+			cout << "your delete the value " << value << " locate in " << locate<<endl;
+		}
+			
+		if (judge == ERROR)
+		{
+			SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | FOREGROUND_RED);
+
+			cout << "ERROR"<<endl;
+			SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+			
+				continue;
+		}
+		if (judge == OVERFLOW)
+		{
+			//system("color 02");
+			SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | FOREGROUND_RED);
+			
+			cout << "OVERFLOW!!!Your input is illegal!Again!" << endl<<endl;
+			SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | FOREGROUND_BLUE |FOREGROUND_GREEN|FOREGROUND_RED);
+				continue;
+		}
+
+		cout << "the array is : "<<endl;
+		for (int i = 0; i < a.length; i++)
+
+			{
+
+			cout << a.elem[i]<<" ";
+
+			}
+		HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+		SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | FOREGROUND_GREEN);
+		cout << endl << "the output is over,please input again!"<<endl<<endl;
+		SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+		
+		
+	}
+	
+
+	
+
+
+
+
+}
+
+/*
+
+void MergeList(List La, List Lb,List &Lc)
+
+{
+
+
+}
+
+*/
