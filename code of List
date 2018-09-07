@@ -77,6 +77,20 @@ Status ListInsert_Sq(SqList &L, int i, ElemType e)
 	return OK;
 }//ListInsert_Sq
 
+Status ListDelete_Sq(SqList &L, int i, ElemType &e)
+{
+	if ((i<1) || (i>L.length))return OVERFLOW;
+	ElemType *p = &(L.elem[i - 1]);
+	e = *p;
+	ElemType *q = L.elem + L.length - 1;
+	for (++p; p < q; ++p)
+		*(p - 1) = *p;
+	--L.length;
+	return OK;
+
+
+}//LIST_DELETE
+
 
 
 
@@ -90,7 +104,7 @@ int main()
 	int LB = (2, 6, 8, 9, 11, 15, 20);
 
 	SqList a;
-
+	 
 
 	InitList_Sq(a);
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -103,21 +117,44 @@ int main()
 	{
 		int locate;
 		ElemType value;
-		cout << "input locate: ";
+		int choose;
+		SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | FOREGROUND_BLUE);
+		cout << "if you want to insert choose 1." << endl;
+		cout << "if you want to delete choose 2." << endl;
+		SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+		cout << "please input your choose:";
+		cin >> choose;
+		
+		int judge;
+		if (choose == 1)
+		{
+			cout << "input locate: ";
 		cin >> locate;
 		cout  << "input value:  " ;
 		cin >> value;
-		int judge;
-		judge=ListInsert_Sq(a,locate,value);
+			judge = ListInsert_Sq(a, locate, value);
+		}
+			
+		else if (choose == 2)
+		{
+			cout << "input locate: ";
+			cin >> locate;
+			judge = ListDelete_Sq(a, locate, value);
+			cout << "your delete the value " << value << " locate in " << locate<<endl;
+		}
+			
 		if (judge == ERROR)
 		{
+			SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | FOREGROUND_RED);
+
 			cout << "ERROR"<<endl;
+			SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+			
 				continue;
 		}
 		if (judge == OVERFLOW)
 		{
 			//system("color 02");
-			HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
 			SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | FOREGROUND_RED);
 			
 			cout << "OVERFLOW!!!Your input is illegal!Again!" << endl<<endl;
