@@ -1,0 +1,198 @@
+#include<iostream>
+#include<string>
+using namespace std;
+
+
+int sum=0;
+int average_sum = 0;
+float average_score = 0;
+int true_stu=0;
+
+
+
+struct student
+{
+	string name;
+	float score;
+};
+
+int main()
+{
+	student a[35];
+	a[0].name = "Sam";
+	a[1].name = "LY";
+	a[2].name = "Teacher";
+	a[3].name = "WTH";
+	cout << "程序开始运行！！！";
+	cout << endl;
+	cout << endl; cout << endl;
+
+
+	cout << endl;
+	for (int i = 0; i < 30; i++)
+	{
+		cout << "学生" << i << "的姓名为:";
+		cout << a[i].name<<endl;
+		cout << "现在请输入学生的成绩：";
+		float judge ;
+		cin >> judge;
+
+		if (judge < 0)
+			break;
+		a[i].score = judge;
+		true_stu++;
+
+
+		
+	}
+	for (int i = 0; i < true_stu; i++)
+	{
+		average_score += a[i].score;
+	}//统计总分
+
+	average_score /= true_stu;//平均分
+	cout << "学生的平均分为" <<average_score<< endl;
+
+	while (true)
+	{
+		cout << "***********************"<<endl<<endl;
+		cout << "输入完毕，现在请输入您要查询的数值。"<<endl;
+		cout << "输入1查询不及格人数和名单" << endl;
+		int cases;
+		cin >> cases;
+		if (cases == 1)//第一种情况，统计不及格人数
+		{
+			for (int i = 0; i < true_stu; i++)
+			{
+				if (a[i].score < 60)
+				{	
+					sum++;
+					cout << "这是不及格的" << a[i].name << "他的分数是" << a[i].score<<endl;
+				}
+					
+
+			}
+		}
+		else if (cases == 2)//第二种情况，统计大于平均分的人的人数
+		{
+			for (int i = 0; i < true_stu; i++)
+			{
+				if (a[i].score >=average_score)
+				{	
+					average_sum++;
+					cout << "这是超过平均分的" << a[i].name << "他的分数是" << a[i].score<<endl;
+				}
+					
+
+			}
+
+		}
+		else if (cases == 3)//第三种情况，统计段内人数
+		{
+			cout << endl;
+			cout << endl;
+			cout << "您要查询的是第几段呢？请输入";
+			int cut = 0;
+			cin >> cut;
+			if (cut == 0)
+			{
+				int stu_cut = 0;
+				for (int i = 0; i < true_stu; i++)
+				{
+					if (0<a[i].score<60 )
+					{
+						stu_cut++;
+						cout << "这是段内的" << a[i].name << "他的分数是" << a[i].score << endl;
+					}
+
+
+				}
+				cout << "段内的人数为" << stu_cut << endl;
+			}
+			if (cut == 1)
+			{
+				int stu_cut = 0;
+				for (int i = 0; i < true_stu; i++)
+				{
+					if (60<=a[i].score<=69)
+					{
+						stu_cut++;
+						cout << "这是段内的" << a[i].name << "他的分数是" << a[i].score << endl;
+					}
+
+
+				}
+				cout << "段内的人数为" << stu_cut << endl;
+			}
+			if (cut == 2)
+			{
+				int stu_cut = 0;
+				for (int i = 0; i < true_stu; i++)
+				{
+					if (70<=a[i].score<=79)
+					{
+						stu_cut++;
+						cout << "这是段内的" << a[i].name << "他的分数是" << a[i].score << endl;
+					}
+
+
+				}
+				cout << "段内的人数为" << stu_cut << endl;
+			}
+			if (cut == 3)
+			{
+				int stu_cut = 0;
+				for (int i = 0; i < true_stu; i++)
+				{
+					if (80<=a[i].score<=89)
+					{
+						stu_cut++;
+						cout << "这是段内的" << a[i].name << "他的分数是" << a[i].score << endl;
+					}
+
+
+				}
+				cout << "段内的人数为" << stu_cut << endl;
+			}
+			if (cut == 4)
+			{
+				int stu_cut = 0;
+				for (int i = 0; i < true_stu; i++)
+				{
+					if (90<=a[i].score<=99)
+					{
+						stu_cut++;
+						cout << "这是段内的" << a[i].name << "他的分数是" << a[i].score << endl;
+					}
+
+
+				}
+				cout << "段内的人数为" << stu_cut << endl;
+			}
+			if (cut == 5)
+			{
+				int stu_cut = 0;
+				for (int i = 0; i < true_stu; i++)
+				{
+					if (a[i].score==100)
+					{
+						stu_cut++;
+						cout << "这是段内的" << a[i].name << "他的分数是" << a[i].score << endl;
+					}
+
+
+				}
+				cout << "段内的人数为" << stu_cut << endl;
+			}
+
+
+
+		}
+	
+	}
+
+
+
+
+
+}
