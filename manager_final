@@ -1,0 +1,167 @@
+#include<iostream>
+#include<string>
+#include "Windows.h"
+using namespace std;
+
+#define ToGreen SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | FOREGROUND_GREEN)
+#define ToWhite SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED)
+#define ToYellow SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN)
+//颜色宏定义
+
+struct student
+{
+	string name;
+	string ID;
+	float score;
+};
+
+int main()
+{
+
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);//控制台句柄用了可以改颜色
+
+	int sum = 0;
+	int average_sum = 0;
+	float average_score = 0;
+	int true_stu = 0;
+
+	student stu[35] = {};//保存学生信息
+	int sec[6] = {};//保存分段信息
+
+	stu[0].name = "Sam";stu[0].ID = "CST17001";
+	stu[1].name = "LY";stu[1].ID = "CST17002";
+	stu[2].name = "Tony";stu[2].ID = "CST17003";
+	stu[3].name = "Fox";stu[3].ID = "CST17004";
+	stu[4].name = "Tiger";stu[4].ID = "CST17005";
+	stu[5].name = "Java";stu[5].ID = "CST17006";
+	stu[6].name = "C++";stu[6].ID = "CST17007";
+	stu[7].name = "Hi!"; stu[7].ID = "CST17008";
+	stu[8].name = "DJ"; stu[8].ID = "CST17009";
+	stu[9].name = "Peter"; stu[9].ID = "CST17010";
+	//载入自己定义好的学生信息，除了分数
+
+	ToGreen;cout << "程序开始运行！！"<< endl<<endl<<endl<<endl;ToWhite;
+
+
+
+
+	for (int i = 0; i < 30; i++)
+	{
+		ToGreen;
+		cout << "学生" << i << "的姓名为:";
+		cout << stu[i].name << endl;
+		cout << "学生" << i << "的学号为:";
+		cout << stu[i].ID << endl;
+		cout << "现在请输入这位学生的成绩：";	
+		ToWhite;
+		float judge;
+		cin >> judge;
+
+		if (judge < 0)
+			break;//如果输入-1则取消当前这位学生-1的成绩，跳出
+		stu[i].score = judge;
+		true_stu++;
+
+	}
+	cout << endl;
+	//确定当前学生的人数，以及赋值成绩
+
+
+	for (int i = 0; i < true_stu; i++)
+	{
+		average_score += stu[i].score;
+	}//统计总分
+
+	average_score /= true_stu;//平均分
+	ToGreen;cout << "学生的平均分为" << average_score << endl;ToWhite;
+
+
+	while (true)//进入无限菜单循环
+	{
+		ToGreen;
+		cout << "******************************************************" << endl << endl;
+		cout << "------------------------------------------------------" << endl;
+		cout << "输入1查询不及格人数和名单" << endl;
+		cout << "输入2统计大于平均分的人的人数" << endl;
+		cout << "输入3统计段内人数" << endl;
+		ToWhite;
+		int cases;
+		cin >> cases;
+		cout << endl << endl;
+		if (cases == 1)//第一种情况，统计不及格人数
+		{
+			for (int i = 0; i < true_stu; i++)
+			{
+				if (stu[i].score < 60)
+				{
+					sum++;
+					cout << "这是不及格的" << stu[i].name << "\t他的学号是" << stu[i].ID << "\t他的分数是" << stu[i].score << endl;
+				}
+
+
+			}
+		}
+		else if (cases == 2)//第二种情况，统计大于平均分的人的人数
+		{
+			for (int i = 0; i < true_stu; i++)
+			{
+				if (stu[i].score >= average_score)
+				{
+					average_sum++;
+					cout << "这是超过平均分的" << stu[i].name << "\t他的学号是" << stu[i].ID << "\t他的分数是" << stu[i].score << endl;
+				}
+
+
+			}
+
+		}
+		else if (cases == 3)//第三种情况，统计段内人数
+		{
+			
+
+			int cut = 0;//cut理解为分段的意思
+			int stu_cut = 0;
+
+				for (int i = 0; i < true_stu; i++)
+				{
+					if (0 < stu[i].score&&stu[i].score < 60)
+						sec[0]++;
+					if (60 <= stu[i].score&&stu[i].score <= 69)
+						sec[1]++;
+					if (70 <= stu[i].score&&stu[i].score <= 79)
+						sec[2]++;
+					if (80 <= stu[i].score&&stu[i].score <= 89)
+						sec[3]++;
+					if (90 <= stu[i].score&&stu[i].score <= 99)
+						sec[4]++;
+					if (stu[i].score == 100)
+						sec[5]++;
+				}
+				//按分数分类放入sec数组
+				cout << "0~59段内的人数为" << sec[0] << endl;
+				cout << "60~69段内的人数为" << sec[1] << endl;
+				cout << "70~79段内的人数为" << sec[2] << endl;
+				cout << "80~89段内的人数为" << sec[3] << endl;
+				cout << "90~99段内的人数为" << sec[4] << endl;
+				cout << "100段内的人数为" << sec[5] << endl<<endl;
+
+				cout << "0~59段内的百分比为" << (float)sec[0] / (float)true_stu*100.0 << "%"<<endl;
+				cout << "60~69段内的百分比为" << (float)sec[1] / (float)true_stu*100.0 << "%"<<endl;
+				cout << "70~79段内的百分比为" << (float)sec[2] / (float)true_stu*100.0 << "%"<<endl;
+				cout << "80~89段内的百分比为" << (float)sec[3] / (float)true_stu*100.0 << "%"<<endl;
+				cout << "90~99段内的百分比为" << (float)sec[4] / (float)true_stu*100.0 << "%"<<endl;
+				cout << "100段内的百分比为" << (float)sec[5] / (float)true_stu*100.0 << "%"<<endl<<endl;
+
+		}
+
+		ToYellow;
+		cout << "按任意键回到开始目录" << endl;
+		system("pause");
+		system("cls");
+		cout << "程序回到了选择界面！请选择！" << endl << endl;
+		ToWhite;
+		//返回菜单
+	}
+
+
+}
