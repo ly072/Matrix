@@ -1,0 +1,284 @@
+package Matrix;
+
+import java.applet.AudioClip;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.*;
+
+
+
+public class blackboard extends JFrame{
+	//这里是全局的定义，所有的变量在这里有效
+	  java.util.Random Shiji = new java.util.Random();
+      int YingxHP = 20;
+      int YingxMP = 0;
+      int MogHP = 20;
+      int MogMP = 0;
+      int MogDo = 0;
+      int fangyu = 0;
+	 int judge = 0; 
+	 int judge2=0;
+	 int difficult=0;
+	
+	public void CreateJFrame(String title)
+	{
+		//frame的组件一览
+		 JButton easy_btn=new JButton("简单模式");
+	        easy_btn.setBounds(50, 330, 340, 110);
+	        easy_btn.setFont(new   java.awt.Font("Dialog",   1,   50)); 
+	        easy_btn.setForeground(Color.green);
+	        //难度简单的组件
+	        
+	        
+	        JButton common_btn=new JButton("普通模式");//创建一个按钮对象
+ 	        common_btn.setBounds(550, 330, 340, 110);//设置按钮的位置
+ 	        //第一个参数是按钮的X坐标，第二个参数是按钮的Y坐标
+ 	        //第三个参数是按钮的左右长度，第四个参数是按钮的上下参数
+ 	        //屏幕长1500，宽900
+ 	        common_btn.setFont(new   java.awt.Font("Dialog",   1,   50)); 
+ 	        common_btn.setForeground(Color.blue);
+ 	        //难度普通的组件
+			
+ 			JButton hard_btn=new JButton("地狱模式");
+ 	        hard_btn.setBounds(1050, 330, 340, 110);
+ 	        hard_btn.setFont(new   java.awt.Font("Dialog",   1,   50)); 
+ 	        hard_btn.setForeground(Color.red);
+ 	        //难度为困难的组件
+ 	       JButton attack_btn=new JButton("攻击");
+	        attack_btn.setBounds(1050, 330, 340, 110);
+	        hard_btn.setFont(new   java.awt.Font("Dialog",   1,   50)); 
+	        hard_btn.setForeground(Color.red);
+	        //攻击按钮
+	        //蓄力按钮
+	        //闪避按钮
+	        //重击按钮
+	        
+ 	
+		
+		
+		
+		JFrame jf=new JFrame(title);
+		Container container=jf.getContentPane();
+		//jf.add(PaintovalPane());//
+		jf.setLayout(null);
+		container.setBackground(Color.black);
+		jf.setVisible(true);
+		jf.setSize(1500,900);
+		jf.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		
+		
+		JLabel jl=new JLabel("勇士斗恶龙");
+		jl.setBounds(70, 40, 1500, 500);
+		jl.setFont(new   java.awt.Font("Dialog",   1,   250)); 
+		jl.setForeground(Color.red);
+	//jl.setHorizontalAlignment(SwingConstants.CENTER);
+		container.add(jl);
+		
+		
+		JButton jl2=new JButton("是否准备？");
+		jl2.setBounds(480, 530, 640, 110);
+		jl2.setFont(new   java.awt.Font("Dialog",   1,   100)); 
+		jl2.setForeground(Color.yellow);
+	//jl.setHorizontalAlignment(SwingConstants.CENTER);
+		container.add(jl2);
+		 jl2.addActionListener(new ActionListener() {
+			 
+
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					// TODO Auto-generated method stub
+					jl2.setForeground(Color.black);
+					container.setBackground(Color.white);
+				}}
+	        );
+		
+		 jl2.addMouseListener(new MouseAdapter()//鼠标监听
+			        {
+			            
+			            private int mouseCount = 1;
+			            public void mouseEntered(MouseEvent e)
+			            {
+			                String s="     开始   ";
+			                jl2.setForeground(Color.green);
+			                jl2.setText(s);
+			                
+			            }
+			            public void mouseExited(MouseEvent e)
+			            {
+			            	String s="是否准备？";
+			            	jl2.setForeground(Color.yellow);
+			            	jl2.setText(s);
+			            }
+			            public void mouseClicked(MouseEvent e)
+			                         {
+			                            if(e.getClickCount()==1)
+			                            {
+				                            container.removeAll();
+					                		container.repaint();
+					                		container.setBackground(Color.WHITE);
+				           
+
+					                		container.add(easy_btn);
+					             			container.add(common_btn);
+					             			container.add(hard_btn);
+					             			
+									             			
+				                		judge2=1;						                		
+			                            }		                            
+			                       }
+			           
+			        });
+		 easy_btn.addMouseListener(new MouseAdapter()//鼠标监听
+			        {
+			            public void mouseClicked(MouseEvent e)
+			                         {
+			                            if(e.getClickCount()==1)
+			                            {
+			                            	System.out.println(1);
+				                            container.removeAll();
+					                		container.repaint();
+					                		container.setBackground(Color.WHITE);
+				                		judge2=1;	
+				                		difficult=0;
+			                            }	                            
+			                       } 
+			        });
+		 common_btn.addMouseListener(new MouseAdapter()//鼠标监听
+			        {
+			            public void mouseClicked(MouseEvent e)
+			                         {
+			                            if(e.getClickCount()==1)
+			                            {
+			                            	System.out.println(1);
+				                            container.removeAll();
+					                		container.repaint();
+					                		container.setBackground(Color.WHITE);
+				                		judge2=1;	
+				                		difficult=1;
+			                            }	                            
+			                       } 
+			        });
+		 hard_btn.addMouseListener(new MouseAdapter()//鼠标监听
+			        {
+			            public void mouseClicked(MouseEvent e)
+			                         {
+			                            if(e.getClickCount()==1)
+			                            {
+			                            	System.out.println(1);
+				                            container.removeAll();
+					                		container.repaint();
+					                		container.setBackground(Color.WHITE);
+				                		judge2=1;	
+				                		difficult=2;
+			                            }	                            
+			                       } 
+			        });
+		 
+		 
+
+			  final long timeInterval = 1000;  
+	        Runnable runnable = new Runnable() {  
+	            public void run() {  
+	                while (true) {  
+	                	
+	                    // ------- code for task to run  
+	                	judge++;
+	                	if(judge%2==0)
+	                	container.setBackground(Color.ORANGE);
+	                	else if(judge%2==1)
+	                		container.setBackground(Color.CYAN);
+	                	if(judge2==1)
+	                	{
+	                		container.setBackground(Color.WHITE);
+	                		try{
+	                			File file = new File("D:\\voice_confirm.wav");
+	                			AudioInputStream audioIn = AudioSystem.getAudioInputStream(file);  
+	                			Clip clip = AudioSystem.getClip();
+	                			clip.open(audioIn);
+	                			clip.start();//循环播放 其他 可用方法有start()和stop()
+	                		} catch (UnsupportedAudioFileException e) {  
+	                	            e.printStackTrace();  
+	                	        } catch (IOException e) {  
+	                	            e.printStackTrace();  
+	                	        } catch (LineUnavailableException e) {  
+	                	            e.printStackTrace();  
+	                	        }
+	                		
+	                		break;
+	                	}
+	                		
+	
+	                		
+	                	
+	                	
+	                   // System.out.println("Hello !!");  
+	                    // ------- ends here  
+	                    try {  
+	                        Thread.sleep(timeInterval);  
+	                    } catch (InterruptedException e) {  
+	                        e.printStackTrace();  
+	                    }  
+	                }  
+	            }
+
+
+	        };  
+	        Thread thread = new Thread(runnable);  
+	        thread.start();  
+	        
+	        
+	       
+	        
+		 
+		
+
+		
+		
+		
+		
+
+	}
+	private Component PaintovalPane() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public static void main(String[] args) {
+		
+		try{
+			File file = new File("D:\\1.wav");
+			AudioInputStream audioIn = AudioSystem.getAudioInputStream(file);  
+			Clip clip = AudioSystem.getClip();
+			clip.open(audioIn);
+			clip.loop(Clip.LOOP_CONTINUOUSLY);//循环播放 其他 可用方法有start()和stop()
+		} catch (UnsupportedAudioFileException e) {  
+	            e.printStackTrace();  
+	        } catch (IOException e) {  
+	            e.printStackTrace();  
+	        } catch (LineUnavailableException e) {  
+	            e.printStackTrace();  
+	        }
+	
+		new blackboard().CreateJFrame("Warriors fight dragons");
+		
+	}
+
+}
+
+
+
+
+
+
+
