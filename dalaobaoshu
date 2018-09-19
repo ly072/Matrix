@@ -1,0 +1,118 @@
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+
+int main()
+{
+	int winner = 0;
+	int flag = 0;//if flag is five,out
+	int cur = 0;
+	//input the number of the student 
+	int cases;
+	cin >> cases;
+
+	int *a = new int[cases];
+	int *alive = new int[cases];//show the people is alive
+	for (int i = 0; i < cases; i++)//at the begin ,all people is alive
+	{
+		alive[i] = 1;
+	}
+	for (int i = 0; i < cases; i++)//cin
+	{
+		*(a + i) = i + 1;
+	}
+	//check point 1,input is ok
+
+	while (true)
+	{
+		//kill one people 
+		for (; cur < cases;)
+		{
+			while (1)
+			{
+				if (alive[cur] == 0)//the people is alive
+				{
+					if (cur == cases - 1)
+						cur = 0;
+					else
+						cur++;
+				}
+				else
+					break;
+			}
+	
+
+			if (alive[cur] ==1)//the people is alive
+			{
+				cout << cur+1 << "is alive"<<endl;
+				flag++;
+			}
+			else
+			{
+				if (cur == cases - 1)
+					cur = 0;
+				else
+					cur++;
+			}
+			
+
+			
+
+			if (flag == 5)//kill
+			{
+				flag = 0;
+				cout << "the people going to die is "<<*(a+ cur)<<endl;
+				alive[cur] = 0;
+				if (cur == cases - 1)
+					cur = 0;
+				else
+					cur++;
+				break;
+			}
+				
+
+			if (cur == cases - 1)
+				cur = 0;
+			else
+				cur++;
+		}
+
+
+
+		int flag2 = 0;//flag2 is use to judge if the arror only has one people
+		for (int i = 0; i < cases; i++)
+		{
+			if (*(alive + i) != 0)
+				flag2++;
+		}
+		if (flag2 == 1)
+		{
+			for (int i = 0; i < cases; i++)
+			{
+				if (*(alive + i) != 0)
+					winner = i;
+			}
+			break;
+		}
+			
+
+		for (int i = 0; i < cases; i++)
+		{
+			cout << alive[i]<<" ";
+		}
+		cout << endl;
+		system("pause");
+
+	}
+	cout << endl << endl << endl;
+	cout << endl << endl << endl;
+	cout << endl << endl << endl;
+	for (int i = 0; i < cases; i++)
+	{
+		cout << alive[i] << " ";
+	}
+	cout << endl;
+	cout << "the winer is " << winner+1 << endl;
+
+	system("pause");
+}
