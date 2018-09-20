@@ -1,0 +1,67 @@
+#include<iostream>
+#include<cstdlib>
+
+using namespace std;
+int MAX;
+void inputMatrix(int hang, int lie, int **a)
+{
+	for (int i = 0; i < hang; i++)
+	{
+		for (int j = 0; j < lie; j++)
+		{
+			cin >> a[i][j];
+		}
+	}
+}
+
+void printMatrix(int lie, int hang, int **a)
+{
+	for (int i = 0; i < hang; i++)
+	{
+		for (int j = 0; j < lie; j++)
+		{
+			cout << a[i][j]<<" ";
+		}
+		cout << endl;
+	}
+}
+
+void transpose(int hang, int lie, int **a)
+{
+
+	
+		int i, j;
+		for (i = 1; i<MAX; i++)
+		{
+			for (j = 0; j<i; j++)
+				swap(a[i][j], a[j][i]);
+		}
+	
+	
+}
+
+
+
+int main()
+{
+
+	int hang; 
+	int lie; 
+
+	cin >> hang >> lie;
+	if (hang >= lie)
+		MAX = hang;
+	else
+		MAX = lie;
+
+	int **a = new int*[MAX];
+	for (int i = 0; i < MAX; i++)
+	{
+		a[i] = new int[MAX];
+	}
+	 inputMatrix( hang,  lie, a);
+	 transpose(hang, lie, a);
+	printMatrix(hang, lie, a);
+	system("pause");
+
+}
