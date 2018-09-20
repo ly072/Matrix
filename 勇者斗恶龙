@@ -1,0 +1,265 @@
+package Matrix;
+
+class blackboard{
+    public static void main(String[] args) {
+        java.util.Random Shiji = new java.util.Random();
+        java.util.Scanner Shuru = new java.util.Scanner(System.in);
+        java.util.Scanner Nandu = new java.util.Scanner(System.in);
+        int YingxHP = 200;
+        int YingxMP = 0;
+        int MogHP = 100;
+        int MogDo = 0;
+        int fangyu = 0;//fangyu
+        int Mogfangyu=0;
+        int MogAttack=20;
+        int Attack=0;
+        int wave=0;
+        int tuxi_cd=0;
+        int mingxiang_cd=0;
+        int jiandao_cd=0;
+        int lv_up=0;
+        String ch_hp="▇";
+        String ch_mp="◆";
+        System.out.println("┏━━━━╮┏━━┣┣┓　╮　┓　　┏━┳━┳┓　　┓━┓　");
+        System.out.println("┏┣━━━┓┏━━┣┣┓　　　┃　　┏　┃　┃┓　　┃　╯　");
+        System.out.println("┣┣━━━┫╭━━┻╯　　╮　┃　　╰┓┃　┃╯┏━┣━━┓");
+        System.out.println("┣┣━━━┫┏━━━━┓╭━━┣━┛┗━┻━┻┛　　┃┃　　");
+        System.out.println("┏┣━━━┓┣━━━━┫　　　┃　　┃┃┗╮╮┃　　┃┣━╯");
+        System.out.println("　┛　　┗╯┗━━━━╯　　┗╯　　╰╰━━┛┛┗━╯╰━┛");
+        System.out.println();
+        System.out.println("     作者:恶龙");
+        System.out.println();
+        System.out.println("说明:勇者的操作方式为以下所示:");
+        System.out.println("     （无CD  ）使用普攻可造成伤害2HP,强化自己1点攻击力");
+        System.out.println("       发动成功率50%，使用突袭需消耗3MP 附加20HP伤害，此回合不受攻击");
+        System.out.println("     （CD2回合）使用冥想消耗3MP ，本回合伤害减半，回复40滴血");
+        System.out.println("     （CD1回合）使用无极剑道回复2MP ，伤害为敌人当前生命值%10的+普攻");
+        System.out.println("     恶龙基础攻击力20，防御0");
+        System.out.println("     普通恶龙每三个回合攻防会加强");
+        System.out.println("     噩梦恶龙每两个回合攻防会加强");
+        System.out.println("     噩梦和普通恶龙后期会利用他们溢出的防御来回血");
+        System.out.println("     不可能模式的恶龙攻击甚至比普通的要低，但是。。。");
+        System.out.println("     准备说明完毕,那么让我们来挑战恶龙吧！");
+        System.out.println("==================================");
+        //难度选择
+        System.out.println("请选择难度");
+        System.out.println("1.娱乐   2.挑战   3.噩梦  4.◆不可能◆");
+        int ND = Nandu.nextInt();
+     	
+        if(ND==2)
+        {
+        	lv_up=2;
+        	MogAttack=25;
+        	MogHP = 200;
+        }
+        if(ND==3)
+        {
+        	MogHP = 300;
+        	lv_up=1;
+        	System.out.println("你选择了高难度，去商店挑一件装备吧");
+        	System.out.println("1.铁剑，伤害提升3"); 
+        	System.out.println("2.铠甲，防御增加10");
+        	 MogAttack=38;
+        	 System.out.println();
+        	 System.out.println("你选择？");
+        	 int choose=Shuru.nextInt();
+        	 if(choose==1)
+        		Attack=3;
+        	 if(choose==2)
+        		 fangyu = 10;
+        }
+        if(ND==4)
+        {
+        	MogHP = 650;
+        	System.out.println("");
+        	System.out.println("你选择了最高的难度，去商店挑一件装备,然后好好享受吧");
+        	System.out.println("1.铁剑，伤害提升10"); 
+        	System.out.println("2.铠甲，防御增加20");
+        	 MogAttack=38;
+        	 System.out.println();
+        	 System.out.println("你选择？");
+        	 int choose=Shuru.nextInt();
+        	 if(choose==1)
+        		Attack=10;
+        	 if(choose==2)
+        		 fangyu = 20;
+        	MogAttack=10;
+        	lv_up=3;
+        	
+        	
+        }
+        
+        System.out.println("==================================");
+        
+        while (true) {
+            //HP，MP的显示
+            System.out.print("勇者:  ");
+            System.out.print(" HP ");
+            for (int x = YingxHP; x > 0; x-=10) System.out.print(ch_hp);
+            System.out.print(" " + YingxHP);
+            System.out.println();
+            System.out.print("       ");
+            System.out.print(" MP ");
+            for (int x = YingxMP; x > 0; x--) System.out.print(ch_mp);
+            System.out.println(" " + YingxMP);
+            System.out.println();
+            System.out.print("恶龙:  ");
+            System.out.print(" HP ");
+            for (int y = MogHP; y > 0; y-=10) System.out.print(ch_hp);
+            System.out.print(" " + MogHP);
+            System.out.println();
+            System.out.print("       ");
+            System.out.println();
+            System.out.println("==================================");
+            //胜利判定
+            if (YingxHP < 1) {
+                System.out.println();
+                System.out.println("勇者HP为0! GAME OVER");
+                System.out.println();
+                break;
+            }
+            if (MogHP < 1) {
+                System.out.println();
+                System.out.println("恶龙HP为0! 恶龙绝望的哀鸣中倒了下去。恭喜你挑战成功！！");
+                System.out.println();
+                break;
+            }
+            	
+            if(wave%3==0&&lv_up==2)
+            {
+            	   Mogfangyu++;
+                   MogAttack++;
+                   System.out.println("强大的恶龙发出了咆哮，它的攻防增加了");
+            }
+            if(wave%2==0&&lv_up==1)
+            {
+            	  Mogfangyu++;
+                  MogAttack++;
+                  System.out.println("无比强大的恶龙发出了咆哮，它的攻防增加了");
+            }  
+            if(lv_up==3)
+            {
+            	  Mogfangyu+=3;
+                  MogAttack+=3;
+                  System.out.println("恶龙发出了毁天灭地的咆哮，它的攻防增加了");
+            }  
+             tuxi_cd--;
+             mingxiang_cd--;
+             jiandao_cd--;
+
+  
+            //角色输入判定
+            System.out.println("你要做什么：");
+            System.out.println("1.普通攻击");
+            if(tuxi_cd<=0)
+            System.out.println("2.突袭");
+            else
+            	 System.out.println(" \t × ");
+            if(mingxiang_cd<=0&& YingxMP >=3)
+            System.out.println("3.冥想-◆");
+            else
+            	System.out.println(" \t × ");
+            if(jiandao_cd<=0)
+            System.out.println("4.剑道+◆");
+            else
+            	System.out.println(" \t × ");
+            System.out.println("____________________");
+            int Do = Shuru.nextInt();
+            //敌人输入判定
+            //娱乐难度
+            System.out.println("恶龙当前的攻击力为"+MogAttack);
+            System.out.println("恶龙当前的防御力为"+Mogfangyu);
+            System.out.println("勇士当前的攻击力为"+Attack);
+            System.out.println("勇士当前的防御力为"+fangyu);
+            
+            
+              MogDo = Shiji.nextInt(3);   //，1攻击 ，2发呆，3闪避  
+              
+                if(Do==1&&MogDo==0)//易大师普攻，恶龙攻击
+                {
+                	YingxHP =YingxHP-(MogAttack-fangyu);
+                	MogHP-=(2+Attack-Mogfangyu);
+                	Attack++;
+                	 System.out.println("勇士进行了普通攻击");
+                	 System.out.println("恶龙发动了攻击");
+                }
+                else  if(Do==1&&MogDo==1)//易大师普攻，恶龙发呆
+                {
+                	YingxHP =YingxHP-(MogAttack-fangyu);
+                	MogHP-=(2+Attack-Mogfangyu);    	
+                	Attack++;
+                	System.out.println("勇士进行了普通攻击");System.out.println("恶龙在发呆");
+                }
+                else  if(Do==1&&MogDo==2)//易大师普攻，恶龙闪避
+                {
+                	System.out.println("勇士进行了普通攻击");System.out.println("可惜恶龙发动了闪避");
+                	Attack++;
+                }
+                else  if(Do==2&&MogDo==0&&tuxi_cd<=0)//易大师突袭，恶龙攻击
+                {
+                	System.out.println("勇士发起了突袭");System.out.println("恶龙发动了攻击");
+                	MogHP-=(20+Attack-Mogfangyu);
+                	tuxi_cd=4;
+
+                }
+                else if(Do==2&&MogDo==1&&tuxi_cd<=0)//易大师突袭，恶龙发呆
+                {System.out.println("勇士发起了突袭");System.out.println("恶龙在发呆");
+                	MogHP-=(20+Attack-Mogfangyu);
+                	tuxi_cd=4;
+
+                }
+                else if(Do==2&&MogDo==2&&tuxi_cd<=0)//易大师突袭，恶龙闪避
+                {System.out.println("勇士发起了突袭");System.out.println("可惜恶龙发动了闪避");
+                	tuxi_cd=4;
+
+                }
+                else  if(YingxMP >=3&&Do==3&&MogDo==0&&mingxiang_cd<=0)//易大师冥想，恶龙攻击
+                {System.out.println("勇士在冥想，他感到状态在回复");System.out.println("恶龙发动了攻击");
+                	YingxHP -=((MogAttack-fangyu)/2);
+                	YingxHP+=40;
+                	mingxiang_cd=3;
+                	YingxMP-=3;
+                	
+                }
+                else  if(YingxMP >=3&&Do==3&&MogDo==1&&mingxiang_cd<=0)//易大师冥想，恶龙发呆
+                {System.out.println("勇士在冥想，他感到状态在回复");System.out.println("恶龙在发呆");
+                	YingxHP+=40;
+                	mingxiang_cd=3;
+                	YingxMP-=3;
+                }
+                else if(YingxMP >=3&&Do==3&&MogDo==2&&mingxiang_cd<=0)//易大师冥想，恶龙闪避
+                {System.out.println("勇士在冥想，他感到状态在回复");System.out.println("可惜恶龙发动了闪避");
+                	YingxHP+=40;
+                	mingxiang_cd=3;
+                	YingxMP-=3;
+                }
+                else   if(Do==4&&MogDo==0&&jiandao_cd<=0)//易大师剑道，恶龙攻击
+                {System.out.println("勇士发动了剑道");System.out.println("恶龙发动了攻击");
+                	YingxHP -=(MogAttack-fangyu);
+                	MogHP=(int)(MogHP*0.9)-Attack;
+                	jiandao_cd=2;
+                	YingxMP+=1;
+                }
+                else if(Do==4&&MogDo==1&&jiandao_cd<=0)//易大师剑道，恶龙发呆
+                {
+                	System.out.println("勇士发动了剑道");System.out.println("恶龙在发呆");
+                	MogHP=(int)(MogHP*0.9)-Attack;
+                	jiandao_cd=2;
+                	YingxMP+=1;
+                }
+                else   if(Do==4&&MogDo==2&&jiandao_cd<=0)//易大师剑道，恶龙闪避
+                {System.out.println("勇士发动了剑道");System.out.println("可惜恶龙发动了闪避");
+                	jiandao_cd=2;
+                	YingxMP+=1;
+                }
+                else
+                	System.out.println("勇士没有按照套路出招，这回合什么也没打出来");
+            //挑战难度
+           wave++;
+            //结束
+            System.out.println("____________________");
+            System.out.println();
+            System.out.println("==================================");
+        }
+    }
+}
