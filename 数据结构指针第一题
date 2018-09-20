@@ -1,0 +1,27 @@
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+
+void change(int *a, int *b, int *c)
+{
+	int temp;
+	temp = *c;
+	*c = *a;
+	*a = temp;
+
+
+	temp = *a;
+	*a = *b;
+	*b = temp;
+
+
+}
+
+int main()
+{
+	int a, b, c;
+	cin >> a >> b >> c;
+	change(&a, &b, &c);
+	cout << a<<" " << b <<" "<< c;
+	system("pause");
+}
