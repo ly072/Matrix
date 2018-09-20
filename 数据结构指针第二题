@@ -1,0 +1,33 @@
+#include<iostream>
+#include<cstdlib>
+#include<cmath>
+using namespace std;
+
+void price1(float *a, float *b, float *chajia, float *sum)
+{
+	*a *= 0.75;
+	*b *= 0.8;
+	*chajia = fabs(*a - *b);
+	*sum = *a + *b;
+}
+
+void price2(float &a, float &b, float &chajia, float &sum)
+{
+	a *= 0.75;
+	b *= 0.8;
+	chajia = fabs(a - b);
+	sum = a + b;
+}
+
+int main()
+{
+	float a, b, chajia, sum;
+
+	
+	cin >> a >> b ;
+	//price1(&a, &b, &chajia, &sum);
+	price2(a, b, chajia, sum);
+	cout << a <<" "<< b<<" " << chajia<<" " << sum;
+
+	system("pause");
+}
