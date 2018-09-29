@@ -1,0 +1,270 @@
+#include<iostream>
+#include "Windows.h"
+#include<cstdlib>
+#include<string>
+
+using namespace std;
+
+
+
+
+#define MAXLEN 100 //定义顺序表的最大长度
+
+#define LIST_INIT_SIZE 5
+
+#define LISTINCREMENT 5
+
+#define OK 1
+
+#define ERROR 0 
+
+#define INFEASIBLE -1
+
+#define OVERFLOW -2
+
+#define ElemType big
+
+#define Status int
+
+
+
+#define ToRed SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | FOREGROUND_RED )
+#define ToGreen SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | FOREGROUND_GREEN)
+#define ToWhite SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED)
+#define ToYellow SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN)
+
+
+struct big
+{
+	int loc;
+	string ID;
+	string name;
+	string sex;
+	string score;
+};
+
+struct SqList
+
+{
+
+	ElemType *elem;
+
+	int length;
+
+	int listsize;
+
+};
+
+
+Status InitList_Sq(SqList &L)
+
+{
+
+	L.elem = new ElemType[LIST_INIT_SIZE];
+
+	if (!L.elem) exit(ERROR);
+
+	L.length = 0;
+
+	L.listsize = LIST_INIT_SIZE;
+
+	return 1;
+
+}//初始化
+
+Status ListInsert_Sq(SqList &L, int i,string ID_use, string name_use, string sex_use, string score_use)
+{
+
+	if (i<1 || i>L.length + 1)
+		return OVERFLOW;
+	if (L.length >= L.listsize)
+	{
+		//newbase = (ElemType *)realloc(L.elem, (L.listsize + LISTINCREMENT) * sizeof(ElemType));
+		ElemType *tempp = new ElemType[(L.listsize + LISTINCREMENT)];//重新分配一个更大的
+		memcpy(tempp, L.elem, L.length*sizeof(ElemType));//将原来的内容复制过去
+		delete[] L.elem;//删掉原来的数组
+		L.elem = tempp;
+		if (!L.elem)exit(ERROR);
+		L.listsize += LISTINCREMENT;
+	}
+	ElemType *q =	&(L.elem[i - 1]);
+	for (ElemType *p = &(L.elem[L.length - 1]); p >= q; --p)
+		*(p + 1) = *p;
+	q->ID = ID_use;
+	q->name = name_use;
+	q->sex = sex_use;
+	q->score = score_use;
+	++L.length;
+	return OK;
+}//ListInsert_Sq
+
+Status ListDelete_Sq(SqList &L, int i, ElemType &e)
+{
+	if ((i<1) || (i>L.length))return OVERFLOW;
+	ElemType *p = &(L.elem[i - 1]);
+	e = *p;
+	ElemType *q = L.elem + L.length - 1;
+	for (++p; p < q; ++p)
+		*(p - 1) = *p;
+	--L.length;
+	return OK;
+
+
+}//LIST_DELETE
+
+
+
+
+
+int main()
+
+{
+
+
+
+
+
+
+	SqList a;
+
+
+	InitList_Sq(a);
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | FOREGROUND_GREEN);
+	cout << "the initialize is finished!" << endl;
+	SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+	cout << "please input two number:" << endl << "the first is locate the second is value!" << endl;
+
+	while (true)
+	{
+		int locate;
+		ElemType value;
+		int choose;
+		SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | FOREGROUND_BLUE);
+		cout << "学生信息管理系统" << endl;
+		cout << "======================================================" << endl;
+		cout << "1.学生信息线性表的建立" << endl;
+		cout << "2.插入学生信息" << endl;
+		cout << "3.查询学生信息" << endl;
+		cout << "4.删除学生信息" << endl;
+		cout << "5.输出所有学生信息" << endl;
+		cout << "0.退出学生管理系统" << endl;
+		cout << "======================================================" << endl;
+		cout << "请选择0~5";
+
+		SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+		cin >> choose;
+
+		int judge;
+		if (choose == 1)
+		{
+			cout << "======================================================" << endl;
+			cout << "学生信息线性表的建立" << endl;
+			cout << "======================================================" << endl;
+			cout << "有几位学生？请输入：";
+		}
+		if (choose == 2)
+		{
+			cout << "输入插入的位置" << endl;
+			cin >> locate;
+			string ID_use;
+			string name_use;
+			string score_use;
+			string sex_use;
+
+			cout << "输入学号 " << endl;
+			cin >> ID_use;
+			cout << "输入姓名 " << endl;
+			cin >> name_use;
+			cout << "输入性别" << endl;
+			cin >> sex_use;
+			cout << "输入成绩" << endl;
+			cin >> score_use;
+			judge = ListInsert_Sq(a, locate, ID_use, name_use, sex_use, score_use);
+			cout << "======================================================" << endl;
+			cout << "学生信息线性表的建立" << endl;
+			cout << "======================================================" << endl;
+
+			for (int i = 0; i < a.length; i++)
+
+			{
+				cout << "学号\t" << "姓名\t" << "性别\t" << "成绩"<<endl;
+				//cout << a.elem[i] << " ";
+				ToYellow;
+				cout << *(&(a.elem + i)->ID) << "\t" << *(&(a.elem + i)->name) << " \t" << *(&(a.elem + i)->sex) << "\t" << *(&(a.elem + i)->score) << endl; ToWhite;
+
+
+			}
+		}
+
+		else if (choose == 4)
+		{
+			cout << "input locate: ";
+			cin >> locate;
+
+			judge = ListDelete_Sq(a, locate, value);
+			//cout << "your delete the value " << value << " locate in " << locate << endl;
+		}
+		else if (choose == 5)
+		{
+			cout << "======================================================" << endl;
+			cout << "学生信息线性表的建立" << endl;
+			cout << "======================================================" << endl;
+
+			for (int i = 0; i < a.length; i++)
+
+			{
+				cout << "学号\t" << "姓名\t" << "性别\t" << "成绩" << endl;
+				//cout << a.elem[i] << " ";
+				ToYellow;
+				cout << *(&(a.elem + i)->ID) << "\t" << *(&(a.elem + i)->name) << " \t" << *(&(a.elem + i)->sex) << "\t" << *(&(a.elem + i)->score) << endl; ToWhite;
+
+
+			}
+		}
+
+		if (judge == ERROR)
+		{
+			SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | FOREGROUND_RED);
+
+			cout << "ERROR" << endl;
+			SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+
+			continue;
+		}
+		if (judge == OVERFLOW)
+		{
+			//system("color 02");
+			SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | FOREGROUND_RED);
+
+			cout << "OVERFLOW!!!Your input is illegal!Again!" << endl << endl;
+			SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+			continue;
+		}
+
+		HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+		SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | FOREGROUND_GREEN);
+		cout << endl << "the output is over,please input again!" << endl << endl;
+		SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+		system("pause");
+
+	}
+
+
+
+
+
+
+
+}
+
+/*
+
+void MergeList(List La, List Lb,List &Lc)
+
+{
+
+
+}
+
+*/
