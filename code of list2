@@ -107,17 +107,17 @@ Status ListDelete_id_Sq(SqList &L, string de_id, ElemType &e)
 		ElemType *p = &(L.elem[0]);
 		if ((p + i)->ID == de_id)
 		{
-				ElemType *q = L.elem + L.length - 1;
-				for (p++; p+i <= q; ++p)
-					*(p+i-1) = *(p+i);
-				--L.length;
-				find = true;
+			ElemType *q = L.elem + L.length - 1;
+			for (p++; p + i <= q; ++p)
+				*(p + i - 1) = *(p + i);
+			--L.length;
+			find = true;
 		}
 	}
 	if (find == 0)
 		return ERROR;
-	
-	
+
+
 	return OK;
 
 
@@ -147,23 +147,16 @@ Status ListDelete_name_Sq(SqList &L, string de_name, ElemType &e)
 
 
 }//LIST_DELETE
-Status reverse(SqList &L,  ElemType &e)
+Status reverse(SqList &L, ElemType &e)
 {
-	bool find = false;queue<ElemType&>  Q;
-	for (int i = 0; i < L.length; i++)
+	for (int i = 0; i < L.length/2; i++)
 	{
-		
-		
-		Q.push((L.elem[i]));
-
+		ElemType temp;
+		memcpy( &temp,&L.elem[i], sizeof(temp));
+		memcpy( &L.elem[i],&L.elem[L.length-1-i], sizeof(temp));
+		memcpy(&L.elem[L.length-1 - i], &temp, sizeof(temp));
 	}
-	for (int i = 0; i < L.length; i++)
-	{
-		*(L.elem[i]) = Q.pop();
-	}
-
-	if (find == 0)
-		return ERROR;
+	
 
 	return OK;
 
@@ -209,26 +202,26 @@ int main()
 		cout << "6.信息表逆序" << endl;
 		cout << "0.退出学生管理系统" << endl;
 		cout << "======================================================" << endl;
-		cout << "请选择0~5"<<endl;
+		cout << "请选择0~5" << endl;
 
 		SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
 		cin >> choose;
-string ID_use;
-			string name_use;
-			string score_use;
-			string sex_use;
-			string de_id;
-			string de_name;
-			string find_id;
-			string find_name;
-		int judge=true;
+		string ID_use;
+		string name_use;
+		string score_use;
+		string sex_use;
+		string de_id;
+		string de_name;
+		string find_id;
+		string find_name;
+		int judge = true;
 		if (choose == 1)
 		{
 			cout << "======================================================" << endl;
 			cout << "学生信息线性表的建立" << endl;
 			cout << "======================================================" << endl;
 			cout << "有几位学生？请输入：";
-			int input_stu=0;
+			int input_stu = 0;
 			cin >> input_stu;
 			for (int j = 1; j <= input_stu; j++)
 			{
@@ -240,14 +233,14 @@ string ID_use;
 				cin >> sex_use;
 				cout << "输入成绩" << endl;
 				cin >> score_use;
-				judge = ListInsert_Sq(a,j, ID_use, name_use, sex_use, score_use);
+				judge = ListInsert_Sq(a, j, ID_use, name_use, sex_use, score_use);
 			}
 		}
 		if (choose == 2)
 		{
 			cout << "输入插入的位置" << endl;
 			cin >> locate;
-			
+
 
 			cout << "输入学号 " << endl;
 			cin >> ID_use;
@@ -275,7 +268,7 @@ string ID_use;
 		}
 		else if (choose == 5)
 		{
-			
+
 			for (int i = 0; i < a.length; i++)
 
 			{
@@ -283,25 +276,43 @@ string ID_use;
 				//cout << a.elem[i] << " ";
 				ToYellow;
 				cout << *(&(a.elem + i)->ID) << "\t" << *(&(a.elem + i)->name) << " \t" << *(&(a.elem + i)->sex) << "\t" << *(&(a.elem + i)->score) << endl; ToWhite;
-				 
+
 
 			}
 		}
 		else if (choose == 3)
 		{
-
-				cout << "请输入按学号查询";
+			cout << "请输入要查询的方式 ";
+			cout << "1.按学号查询";
+			cout << "2.按姓名查询";
+			int se_2;
+			cin >> se_2;
+			cout << "请输入按学号查询";
+			if (se_2 == 1)
+			{
 				cin >> find_id;
-				
 				cout << "学号\t" << "姓名\t" << "性别\t" << "成绩" << endl;
 				//cout << a.elem[i] << " ";
 				ToYellow;
-				for (int i = 0; i < a.length;i++)
-				if ((a.elem + i)->ID==find_id)
-				cout << *(&(a.elem + i)->ID) << "\t" << *(&(a.elem + i)->name) << " \t" << *(&(a.elem + i)->sex) << "\t" << *(&(a.elem + i)->score) << endl; ToWhite;
-
-
+				for (int i = 0; i < a.length; i++)
+					if ((a.elem + i)->ID == find_id)
+						cout << *(&(a.elem + i)->ID) << "\t" << *(&(a.elem + i)->name) << " \t" << *(&(a.elem + i)->sex) << "\t" << *(&(a.elem + i)->score) << endl; ToWhite;
+			}
+			if (se_2 == 2)
+			{
+				cin >> find_id;
+				cout << "学号\t" << "姓名\t" << "性别\t" << "成绩" << endl;
+				//cout << a.elem[i] << " ";
+				ToYellow;
+				for (int i = 0; i < a.length; i++)
+					if ((a.elem + i)->name == find_id)
+						cout << *(&(a.elem + i)->ID) << "\t" << *(&(a.elem + i)->name) << " \t" << *(&(a.elem + i)->sex) << "\t" << *(&(a.elem + i)->score) << endl; ToWhite;
+			}
 			
+
+		
+
+
 		}
 
 
@@ -314,9 +325,9 @@ string ID_use;
 			cin >> se;
 			if (se == 1)
 			{
-					cin >> de_id;
+				cin >> de_id;
 
-			judge = ListDelete_id_Sq(a, de_id, value);
+				judge = ListDelete_id_Sq(a, de_id, value);
 			}
 			if (se == 2)
 			{
@@ -324,25 +335,12 @@ string ID_use;
 
 				judge = ListDelete_name_Sq(a, de_id, value);
 			}
-			
+
 			//cout << "your delete the value " << value << " locate in " << locate << endl;
 		}
-		else if (choose == 5)
+		else if (choose == 6)
 		{
-			cout << "======================================================" << endl;
-			cout << "学生信息线性表的建立" << endl;
-			cout << "======================================================" << endl;
-
-			for (int i = 0; i < a.length; i++)
-
-			{
-				cout << "学号\t" << "姓名\t" << "性别\t" << "成绩" << endl;
-				//cout << a.elem[i] << " ";
-				ToYellow;
-				cout << *(&(a.elem + i)->ID) << "\t" << *(&(a.elem + i)->name) << " \t" << *(&(a.elem + i)->sex) << "\t" << *(&(a.elem + i)->score) << endl; ToWhite;
-
-
-			}
+			reverse(a, value);
 		}
 		else if (choose == 0)
 			exit(0);
