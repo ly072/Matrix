@@ -1,0 +1,60 @@
+#include<iostream>
+#include<cstdlib>
+#include<string>
+using namespace std;
+
+int main()
+{
+	int de;
+	cin>>de;string a,b;
+	while(	cin>>a>>b)
+	{
+			
+	string temp;
+
+	
+	int up=0;
+	if(a.length()<b.length())
+	{
+		temp=a;
+		a=b;
+		b=temp;
+	}//promise the a is the biggest length
+		int j=a.length()-1;int i=b.length()-1;
+	for(;i>=0;i--)
+	{
+	
+		a[j]=b[i]+a[j]-'0'+up;
+		up=0;
+		if(a[j]-'0'>=10)
+		{
+			a[j]=a[j]-10;
+			up=1;
+		}
+		j--;
+	}
+	
+	
+	for(;j>=0;j--)
+	{
+		if(up==1)
+		{
+				a[j]=a[j]+up;
+				up=0;
+			if(a[j]-'0'>=10)
+			{
+				a[j]=a[j]-10;
+				up=1;
+			}
+		}
+		
+	}
+	if(up==1)
+	cout<<1;
+	
+
+	cout<<a<<endl;
+	}
+
+	
+}
