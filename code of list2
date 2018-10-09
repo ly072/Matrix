@@ -200,6 +200,7 @@ int main()
 		cout << "4.删除学生信息" << endl;
 		cout << "5.输出所有学生信息" << endl;
 		cout << "6.信息表逆序" << endl;
+		cout << "7.修改数据" << endl;
 		cout << "0.退出学生管理系统" << endl;
 		cout << "======================================================" << endl;
 		cout << "请选择0~5" << endl;
@@ -342,6 +343,64 @@ int main()
 		{
 			reverse(a, value);
 		}
+		else if (choose == 7)
+		{
+			string change;
+			cout << "请输入要修改的方式 "<<endl;
+			cout << "1.按学号修改"<<endl;
+			cout << "2.按姓名修改"<<endl;
+			cout << "3.按性别修改"<<endl;
+			cout << "4.按成绩修改"<<endl;
+			int se_3;
+			cout << "请输入查询方式"<<endl;
+			cin >> se_3;
+			cout << "请输入查询的学生信息"<<endl;
+
+			cin >> find_id;
+
+			cout << "请输入修改后的数据"<<endl;
+				cin >> change;
+			if (se_3 == 1)
+			{
+				
+				cout << "学号\t" << "姓名\t" << "性别\t" << "成绩" << endl;
+				//cout << a.elem[i] << " ";
+				ToYellow;
+				for (int i = 0; i < a.length; i++)
+					if ((a.elem + i)->ID == find_id)
+						*(&(a.elem + i)->ID) = change; ToWhite;
+			}
+			if (se_3 == 2)
+			{
+				cout << "学号\t" << "姓名\t" << "性别\t" << "成绩" << endl;
+				//cout << a.elem[i] << " ";
+				ToYellow;
+				for (int i = 0; i < a.length; i++)
+					if ((a.elem + i)->name == find_id)
+						*(&(a.elem + i)->name) = change; ToWhite;
+			}
+			if (se_3 == 3)
+			{
+
+				cout << "学号\t" << "姓名\t" << "性别\t" << "成绩" << endl;
+				//cout << a.elem[i] << " ";
+				ToYellow;
+				for (int i = 0; i < a.length; i++)
+					if ((a.elem + i)->sex == find_id)
+						*(&(a.elem + i)->sex) = change; ToWhite;
+			}
+			if (se_3 == 4)
+			{
+
+				cout << "学号\t" << "姓名\t" << "性别\t" << "成绩" << endl;
+				//cout << a.elem[i] << " ";
+				ToYellow;
+				for (int i = 0; i < a.length; i++)
+					if ((a.elem + i)->score == find_id)
+						*(&(a.elem + i)->score) =change; ToWhite;
+			}
+		}
+
 		else if (choose == 0)
 			exit(0);
 
