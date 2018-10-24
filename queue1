@@ -1,0 +1,112 @@
+#include<iostream>
+#include<string>
+using namespace std;
+const int QueueSize = 100;
+struct student 
+{
+	int id;
+	int name;
+};
+
+
+
+void print_list()
+{
+	printf("           -------------------欢迎进入答疑系统----------------------\n\n");
+	printf("1.排队              2.答疑          3.查看排队同学的名单          4.退出\n");
+	printf("请选择：           \n");
+
+}
+void select(int choose)
+{
+	switch (choose)
+	{
+	case 1:paidui(); break;
+	case 2:dayin(); break;
+	case 3:chakan(); break;
+	case 4:tuichu(); break;
+	}
+}
+void paidui()
+{
+
+}
+void dayin()
+{
+
+}
+void chakan()
+{
+
+}
+void tuichu()
+{
+
+}
+
+
+template<class DataType>
+
+
+ class myqueue
+{
+public :
+	myqueue(){ 
+	front = QueueSize - 1;
+	rear = QueueSize - 1;//头指针和尾指针都指向队列的头
+	}
+
+	~myqueue(){}
+
+	void in_queue(DataType x);
+	DataType out_queue();
+	DataType GetQueue();//取队头元素
+	int Empty()
+	{
+		front == rear ? return 1 : return 0;
+	}
+private:
+	DataType data[QueueSize];
+	int front, rear;
+
+};
+
+ template<class DataType>
+ void myqueue<DataType>::in_queue(DataType x)
+ {
+	 if ((rear + 1) % QueueSize == front)throw"上溢";
+	 rear = (rear + 1) % QueueSize;
+	 data[rear] = x;
+ }
+
+ template<class DataType>
+ DataType myqueue<DataType>::out_queue()
+ {
+	 if (rear == front)
+		 throw"下溢";
+	 front = (front + 1) % QueueSize;
+	 return data[front];
+
+ }
+
+ template<class DataType>
+ DataType myqueue<DataType>::GetQueue()
+ {
+	 if (rear == front)throw"下溢";
+	 i = (front + 1) % QueueSize;
+	 return data[i];
+ }
+
+ int main()
+ {
+	 print_list();
+	 int choose; cin >> choose;
+	 select(choose);
+
+	 myqueue<student> a;
+
+
+	 system("pause");
+	 return 0;
+ }
+
